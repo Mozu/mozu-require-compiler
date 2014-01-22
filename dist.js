@@ -101,7 +101,7 @@ contents = contents.replace(loadRegExp, function (match, fileName) {
     } else {
         var text = fs.readFileSync(fileName, 'utf8');
         if (fileName.indexOf('require.js') !== -1) {
-            text = text.replace(/var requirejs, require\, define\;/, '');
+            text = text.replace(/var requirejs, require\, define\;/g, '');
         }
         return text;
     }
