@@ -1,5 +1,21 @@
 {
-    "volo": {
-        "url": "https://raw.github.com/jrburke/r.js/{version}/dist/r.js"
-    }
+    "name": "mozu-require-compiler",
+    "description": "RequireJS compiler, customized for Mozu.",
+    "version": "m2.1.0",
+    "homepage": "http://github.com/zetlen/mozu-require-compiler",
+    "author": "Volusion, Inc.",
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/zetlen/mozu-require/blob/master/LICENSE"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zetlen/mozu-require-compiler.git"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "main": "dist/r"
 }
