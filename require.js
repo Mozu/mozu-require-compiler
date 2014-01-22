@@ -138,7 +138,12 @@ var requirejs, require, define;
     }
 
     function defaultOnError(err) {
-        throw err;
+        console && console.warn && console.warn(err);
+    }
+
+    function getMozuData(name) {
+        var script = document.getElementById('data-mz-preload-' + name);
+        if (script) return script.textContent && JSON.parse(script.textContent);
     }
 
     //Allow getting a global that expressed in
@@ -172,6 +177,15 @@ var requirejs, require, define;
         return e;
     }
 
+
+    var mozuBuiltins = {
+        hyprlivecontext: "/hyprlivecontext?callback=define"
+    },
+        builtinRoot = "/js/";
+    each(['sdk', 'hyprlive'], function (modName) {
+        mozuBuiltins[modName] = builtinRoot + modName + "-" + storeMode + ".js";
+    });
+
     if (typeof define !== 'undefined') {
         //If a define is already in play via another AMD loader,
         //do not overwrite.
@@ -201,7 +215,7 @@ var requirejs, require, define;
                 //Defaults. Do not set a default for map
                 //config to speed up normalize(), which
                 //will run faster if there is no default.
-                waitSeconds: 7,
+                waitSeconds: timeoutSeconds,
                 baseUrl: './',
                 paths: {},
                 bundles: {},
@@ -256,6 +270,23 @@ var requirejs, require, define;
         }
 
         /**
+         * MOZU ADDITIONS: We need to make RequireJS module paths case insensitive. 
+         * So far the best place to do this that we've found is in normalize,
+         * but it's overloaded to deal with special strings processed by plugins.
+         * In anticipation of making the shim plugin a first-class citizen anyway,
+         * we're gonna test for those special characters.
+         */
+        var SPECIAL_CHARS_RE = /[\@\[\]\>\!]/;
+        function notSpecial(moduleName) {
+            return (moduleName &&
+                typeof moduleName === "string" &&
+                !moduleName.match(SPECIAL_CHARS_RE) &&
+                moduleName.indexOf('shimRequire') === -1 &&
+                moduleName.indexOf('shimExport') === -1
+                );
+        }
+
+        /**
          * Given a relative module name, like ./something, normalize it to
          * a real name that can be mapped to a path.
          * @param {String} name the relative name
@@ -272,6 +303,10 @@ var requirejs, require, define;
                 normalizedBaseParts = baseParts,
                 map = config.map,
                 starMap = map && map['*'];
+
+            if (notSpecial(name)) {
+                name = name.toLowerCase();
+            }
 
             //Adjust any relative paths.
             if (name && name.charAt(0) === '.') {
@@ -1580,6 +1615,9 @@ var requirejs, require, define;
                     parentPath, bundleId,
                     pkgMain = getOwn(config.pkgs, moduleName);
 
+                // short circuit for mozu builtins
+                if (moduleName in mozuBuiltins)
+                    return (config.cdnPrefix || ("//" + window.location.host)) + mozuBuiltins[moduleName] + (mozuBuiltins[moduleName].indexOf('?') === -1 ? '?' : '&') + "cacheKey=" + (encodeURIComponent(config.cacheKey) || '');
                 if (pkgMain) {
                     moduleName = pkgMain;
                 }
@@ -2065,4 +2103,8 @@ var requirejs, require, define;
 
     //Set up with config info.
     req(cfg);
+    req.mozuData = getMozuData;
+
+req.mixin = mixin;
+
 }(this));
