@@ -1,7 +1,7 @@
 {
   "name": "mozu-require-compiler",
   "description": "RequireJS compiler, customized for Mozu.",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "author": "Volusion, LLC",
   "license": "MIT",
   "repository": {
