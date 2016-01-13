@@ -16,5 +16,8 @@
     "cov": "echo No coverage tooling specified.",
     "test": "echo No testing specified.",
     "prepublish": "mozu-npm-publish-check"
+  },
+  "devDependencies": {
+    "mozu-validate-npm-package": "^1.2.1"
   }
 }
