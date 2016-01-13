@@ -5,7 +5,7 @@ os:
 sudo: false
 branches:
   except:
-    - /^v[0-9]/
+  - /^v[0-9]/
 env:
   matrix:
   - TRAVIS_NODE_VERSION="4.1"
@@ -18,7 +18,7 @@ before_script:
 - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
   && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm
   install $TRAVIS_NODE_VERSION
-- npm install -g npm #want latest npm
+- npm install -g npm
 - npm install
 - git config --global user.email "travis-ci-build@volusion.com"
 - git config --global user.name "Travis CI Build"
@@ -28,4 +28,4 @@ script:
 - if [ -n "TRAVIS_TAG" ]; then npm run ci-build-stable; else npm run ci-build; fi
 notifications:
   slack:
-    secure: 1JBhIYVAEGxoylBBOyOzw4ynj+2LUwl42elrWJ/JyR0uHvsLZB8FevSscxXk/lz2ltQD7mvfbPJHcnbvXJDNXmvAsliT0syy/Zz/ELexg5HaiYx6Hg7j5cfcMfl40byeJb2GUvigxNgj5DXA1DyZiesQ0vHKbua8F3HjBauNCVZeV6QGAkibDlvD+qwC6HZnJthgXYFYZZKZiHR2q2cyav/LkYJvvODtqwEa8cIR+ScHS/3MK7EgRYfCJ3YZbO7J5zwMbp0cdXdSR6VzY0jSwNNQr2LhWRCx46Z0V4VBlcPUrcft7Psum2vnbYDMp3TPo/M191iFFNZTyAyRGncNkVqJSBM6ypWKOwe/maH06gmoir+yVKzU0EIhOx9rlh7G6nOgl+Lk75d4IscPGPgt058BFGi0xY5qbbAd2krm9eM4NAcRK0cMeEw6Ln7m1/qXb9I1B9KEVsBhA8ou1pPoh7LtMIhs0SaQ2eLPES0NDRVL3zQ6JPFpycBr5OCA/AzlDiwv4MRbk6KMWygVggraa9Fq1BlptSrOVqEUPQj/0lLn7qfKkQOHAl4ICbznYhkXIz3wpXF7iXrahVd8R79l4gw2bt4xwsZiSVqsFb1XcSMvyBqkcUnxF1qOwTMAIxzlyXVU/27lZHNNJstpef426eIrtBDVGjRtlsz7vbwY9y8=
+    secure: gl0wgr/yqwlqy195tI93jWXtaItOYgOp7BYnzhu7o0D8m7IKZqHpwr/2CvWMhogvaSDchtyL0tjITbyJojYpQxWxZ0qttesncM7dOpLU7nUIMBl/lXGzPXFs3kA2MD2066K2LAVEttzUm8fybUiiu43LV3/fm+nA2yqs4lMIDeocINvwgDgS/vMkEQkvf8OuyTysRDVu5oK52q9XAXGefbWrMLjElUI3mArmr21fHk4/YsO5HF7YIkPuC2hksZlSEoj5sCJObEGdIQmTVPMvqGI/yAqAK+EsKM/S73jEWMiLg6zXOZMv0yHMfyEyj5AohdbA/wa59TRFWikOlbxRz++SVH1trQZAPmIEymvCMR8YRw8seZapcJ9MIf+7eZbdqfMEWAMTKM4A2qQqficLTC1DJ2rS1wUVQ83J+v2DDN/7G6ae/gh++HRVPxEprX0n4xq2vlYIBmjUL/xIakUNbxqMNb7+C1t6/eCJ7dBCynzPtA4swFw9fDmY+aSOTlQtuygx+aqnTSt1GIj7jIIT57ssTNgMktVz1tIb4tllRz7K01OEOgAeA9cWRK8pwrA2t8wGbECQUYWvtCzpxufbzAPjjq0YQGamv9YBcK9gZLIlbWb/x2LZH86+OM5Tas9Xpaw3CbzuteyLAGd+hIwVSZmJ0gs4091vkKAnwn1hxrA=
